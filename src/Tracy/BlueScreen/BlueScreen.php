@@ -118,7 +118,7 @@ class BlueScreen
 
 
 	/** @internal */
-	public function renderToAjax(\Throwable $exception, DeferredContent $defer): void
+	public function renderToAjax(\Throwable $exception, IDeferredContent $defer): void
 	{
 		$defer->addSetup('Tracy.BlueScreen.loadAjax', Helpers::capture(fn() => $this->renderTemplate($exception, __DIR__ . '/assets/content.phtml')));
 	}

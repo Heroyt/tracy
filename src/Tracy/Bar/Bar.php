@@ -51,7 +51,7 @@ class Bar
 	 * Renders loading <script>
 	 * @internal
 	 */
-	public function renderLoader(DeferredContent $defer): void
+	public function renderLoader(IDeferredContent $defer): void
 	{
 		if (!$defer->isAvailable()) {
 			throw new \LogicException('Start session before Tracy is enabled.');
@@ -61,6 +61,13 @@ class Bar
 		$requestId = $defer->getRequestId();
 		$nonce = Helpers::getNonce();
 		$async = true;
+
+    if ($defer instanceof DeferredContentPsr7) {
+        ob_start();
+        require __DIR__ . '/assets/loader.phtml';
+        $content = ob_get_clean();
+
+    }
 		require __DIR__ . '/assets/loader.phtml';
 	}
 
@@ -68,7 +75,7 @@ class Bar
 	/**
 	 * Renders debug bar.
 	 */
-	public function render(DeferredContent $defer): void
+	public function render(IDeferredContent $defer): void
 	{
 		$redirectQueue = &$defer->getItems('redirect');
 		$requestId = $defer->getRequestId();

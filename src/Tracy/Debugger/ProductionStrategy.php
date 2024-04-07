@@ -10,6 +10,9 @@ declare(strict_types=1);
 namespace Tracy;
 
 use ErrorException;
+use Nyholm\Psr7\Response;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 
 /**
@@ -77,6 +80,10 @@ final class ProductionStrategy
 	{
 		return false;
 	}
+
+  public function sendAssetsPsr7(ServerRequestInterface $request) : ResponseInterface {
+      return new Response(204);
+  }
 
 
 	public function renderLoader(): void

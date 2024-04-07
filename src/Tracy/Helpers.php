@@ -10,6 +10,8 @@ declare(strict_types=1);
 namespace Tracy;
 
 
+use Psr\Http\Message\ServerRequestInterface;
+
 /**
  * Rendering helpers for Debugger.
  */
@@ -304,6 +306,14 @@ class Helpers
 	public static function isAjax(): bool
 	{
 		return isset($_SERVER['HTTP_X_TRACY_AJAX']) && preg_match('#^\w{10,15}$#D', $_SERVER['HTTP_X_TRACY_AJAX']);
+	}
+
+
+	/** @internal */
+	public static function isAjaxPsr7(ServerRequestInterface $request): bool
+	{
+      $option = $request->getServerParams()['HTTP_X_TRACY_AJAX'] ?? null;
+		return isset($option) && preg_match('#^\w{10,15}$#D', $option);
 	}
 
 
